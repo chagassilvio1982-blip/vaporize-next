@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vaporize Next — Acesso</title>
+<link rel="stylesheet" href="./src/ui/styles.css">
+</head>
+<body>
+<main class="shell">
+  <section class="panel" aria-labelledby="heading">
+    <div class="brand">VAPORIZE <span>NEXT</span></div>
+    <p class="eyebrow">Ambiente de homologação</p>
+    <h1 id="heading">Acesso seguro</h1>
+    <p id="status" role="status" aria-live="polite">Inicializando...</p>
+    <form id="login-form" hidden>
+      <label for="email">E-mail</label><input id="email" type="email" autocomplete="username" required>
+      <label for="password">Senha</label><input id="password" type="password" autocomplete="current-password" required>
+      <button type="submit">Entrar</button>
+      <button type="button" class="secondary" id="forgot">Recuperar senha</button>
+    </form>
+    <form id="recovery-form" hidden>
+      <label for="new-password">Nova senha (mínimo de 12 caracteres)</label>
+      <input id="new-password" type="password" autocomplete="new-password" minlength="12" required>
+      <button type="submit">Alterar senha e sair</button>
+    </form>
+    <form id="onboarding-form" hidden>
+      <h2>Cadastrar empresa</h2>
+      <p>Identidade autenticada. Cadastre sua primeira empresa para solicitar acesso aos módulos.</p>
+      <label for="organization-name">Nome da empresa</label>
+      <input id="organization-name" type="text" minlength="2" maxlength="160" required>
+      <label for="organization-slug">Identificador da empresa</label>
+      <input id="organization-slug" type="text" minlength="3" maxlength="60" pattern="[a-z0-9]+(-[a-z0-9]+)*" required>
+      <button type="submit">Criar empresa</button>
+      <button type="button" id="onboarding-logout" class="secondary">Sair</button>
+    </form>
+    <section id="workspace" hidden aria-label="Área interna">
+      <p id="session-identity" role="status" aria-live="polite"></p>
+      <h2>Clientes</h2>
+      <p>Consulta somente leitura da empresa autenticada.</p>
+      <form id="client-create-form" hidden><label for="client-name">Nome</label><input id="client-name" required minlength="2" maxlength="160"><label for="client-phone">Telefone</label><input id="client-phone" maxlength="40"><button type="submit">Cadastrar cliente</button></form>
+      <form id="client-edit-form" hidden><label for="client-edit-name">Nome</label><input id="client-edit-name" required minlength="2" maxlength="160"><label for="client-edit-phone">Telefone</label><input id="client-edit-phone" maxlength="40"><button type="submit">Salvar edição</button><button type="button" id="client-edit-cancel">Cancelar</button></form>
+      <p id="client-write-status" role="status" aria-live="polite"></p>
+      <button id="load-clients" type="button">Consultar clientes</button>
+      <p id="clients-status" role="status" aria-live="polite"></p>
+      <ul id="clients-list" aria-label="Clientes da empresa"></ul>
+      <h2>Veículos</h2>
+      <form id="vehicle-create-form" hidden>
+        <h3>Cadastrar veículo</h3>
+        <label for="vehicle-owner">Cliente</label><select id="vehicle-owner" required></select>
+        <label for="vehicle-brand">Marca</label><input id="vehicle-brand" maxlength="100" required>
+        <label for="vehicle-model">Modelo</label><input id="vehicle-model" maxlength="100" required>
+        <label for="vehicle-plate">Placa (opcional)</label><input id="vehicle-plate" maxlength="16">
+        <button type="submit">Salvar veículo</button>
+      </form>
+      <p id="vehicle-write-status" role="status" aria-live="polite"></p>
+      <p>Consulta somente leitura da empresa autenticada.</p>
+      <form id="vehicle-edit-form" hidden><label for="vehicle-edit-brand">Marca</label><input id="vehicle-edit-brand" required maxlength="100"><label for="vehicle-edit-model">Modelo</label><input id="vehicle-edit-model" required maxlength="100"><label for="vehicle-edit-plate">Placa</label><input id="vehicle-edit-plate" maxlength="16"><button type="submit">Salvar edição</button><button type="button" id="vehicle-edit-cancel">Cancelar</button></form>
+      <label for="vehicle-client-filter">Filtrar veículos por cliente</label>
+      <select id="vehicle-client-filter" aria-label="Filtrar veículos por cliente"><option value="">Todos os clientes</option></select>
+      <button id="load-vehicles" type="button">Consultar veículos</button>
+      <p id="vehicles-status" role="status" aria-live="polite"></p>
+      <ul id="vehicles-list" aria-label="Veículos da empresa"></ul>
+      <h2>Agendamentos</h2>
+      <p>Planejamento em homologação. Horários de 20 minutos, duração padrão de 90 minutos.</p>
+      <form id="appointment-plan-form">
+        <label for="appointment-plan-start">Início do atendimento</label>
+        <input id="appointment-plan-start" type="datetime-local" step="60" required>
+        <label for="appointment-plan-duration">Duração (minutos)</label>
+        <input id="appointment-plan-duration" type="number" min="20" max="480" step="10" value="90" required>
+        <label for="appointment-plan-recurrence">Recorrência</label>
+        <select id="appointment-plan-recurrence">
+          <option value="none">Único</option>
+          <option value="7">Semanal</option>
+          <option value="14">Quinzenal</option>
+        </select>
+        <label for="appointment-plan-count">Quantidade de atendimentos</label>
+        <input id="appointment-plan-count" type="number" min="1" max="52" value="1" required>
+        <button type="submit">Simular horários (sem salvar)</button>
+      </form>
+      <p id="appointment-plan-status" role="status" aria-live="polite"></p>
+      <form id="appointment-create-form" hidden>
+        <h3>Salvar atendimento planejado</h3>
+        <label for="appointment-vehicle">Veículo</label>
+        <select id="appointment-vehicle" required></select>
+        <button type="submit">Salvar agendamento</button>
+      </form>
+      <p id="appointment-write-status" role="status" aria-live="polite"></p>
+      <ul id="appointment-plan-list" aria-label="Prévia dos horários"></ul>
+      <p>Consulta somente leitura dos atendimentos da empresa autenticada.</p>
+      <button id="load-appointments" type="button">Consultar agendamentos</button>
+      <p id="appointments-status" role="status" aria-live="polite"></p>
+      <ul id="appointments-list" aria-label="Agendamentos da empresa"></ul>
+      <h2>Diagnóstico HTTP/JWT</h2>
+      <button id="verify-http-jwt" type="button">Verificar HTTP/JWT (somente leitura)</button>
+      <p id="http-jwt-status" role="status" aria-live="polite"></p>
+      <h2>Teste de operações</h2>
+      <p>Somente homologação. Cria, edita e cancela um atendimento fictício.</p>
+      <button id="verify-appointment-writes" type="button">Testar criação, edição e cancelamento</button>
+      <p id="appointment-write-probe-status" role="status" aria-live="polite"></p>
+      <button id="logout" type="button">Sair</button>
+    </section>
+  </section>
+</main>
+<script src="./src/ui/config.js"></script>
+<script type="module" src="./src/ui/main.js"></script>
+</body>
+</html>
