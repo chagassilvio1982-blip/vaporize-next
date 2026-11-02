@@ -1,0 +1,29 @@
+name: Import isolated Vaporize Next source
+on:
+  push:
+    paths:
+      - '.github/workflows/import-next.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Copy only Vaporize Next from legacy branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --single-branch --branch vaporize-next/isolado-20261029 https://github.com/chagassilvio1982-blip/vaporeasy.git /tmp/vaporeasy-source
+          test -f /tmp/vaporeasy-source/vaporize-next/package.json
+          test -f /tmp/vaporeasy-source/vaporize-next/index.html
+          cp -a /tmp/vaporeasy-source/vaporize-next/. .
+          test -f src/ui/main.js
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "import: isolated Vaporize Next application and tests" || exit 0
+          git push origin HEAD:main
